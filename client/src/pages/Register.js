@@ -21,7 +21,7 @@ const Register = () => {
     // Placeholder registration logic
     try {
       // Make a request to your backend to register the user
-      const response = await fetch('http://localhost:5000/register', {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

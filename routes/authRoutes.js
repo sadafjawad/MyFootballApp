@@ -6,7 +6,7 @@ const User = require('../models/User');
 const router = express.Router();
 
 // Registration endpoint
-router.post('/register', async (req, res) => {
+router.post('/api/auth/register', async (req, res) => {
     try {
         const { username, email, password } = req.body;
         // Check if user already exists
@@ -32,13 +32,18 @@ router.post('/register', async (req, res) => {
 });
 
 // Login endpoint
-router.post('/login', async (req, res) => {
+router.post('/api/auth/login', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { username, password } = req.body;
         // Check if user exists
-        const user = await User.findOne({ email });
+        console.log(username);
+        console.log(password);
+        console.log('before');
+        const user = await User.findOne({ username });
+        console.log(user);
+        console.log('after');
         if (!user) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json({ message: 'User Does not exist' });
         }
         // Validate password
         const isMatch = await bcrypt.compare(password, user.password);
@@ -53,7 +58,7 @@ router.post('/login', async (req, res) => {
         };
         jwt.sign(
             payload,
-            process.env.JWT_SECRET,
+            'watermelon',
             { expiresIn: '1h' },
             (err, token) => {
                 if (err) throw err;
