@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth';
+import Button from '@mui/material/Button';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const Login = () => {
 
   return (
     <div>
+      <Button>Sign In </Button>
       <h2>Login</h2>
       <div>
         <label>Username:</label>
