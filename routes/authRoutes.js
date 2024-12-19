@@ -4,6 +4,29 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const router = express.Router();
+const apiKey = "AIzaSyDP8L_-LyT9Xbp1ASMnefEOyMwdM7QFE4s";
+// news endpoint
+router.get('/api/auth/news', async (req, res) => {
+    const youtubeApiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=`;
+    const searchQuery = 'football+latest+transfer+news';
+    const videoType = 'video';
+    const videoDefinition = 'high';
+
+    const fullUrl = `${youtubeApiUrl}${searchQuery}&type=${videoType}&videoDefinition=${videoDefinition}&key=${apiKey}`;
+    fetch(fullUrl)
+    .then(response => response.json())
+    .then(data => {
+        // Process the search results
+        console.log(data); 
+        const videos = data.items; // Use 'data' instead of 'response'
+        // Do something with the data, like displaying the results on a webpage
+        res.json(videos);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'Failed to fetch YouTube videos' });
+    });
+});
 
 // Registration endpoint
 router.post('/api/auth/register', async (req, res) => {
@@ -36,12 +59,7 @@ router.post('/api/auth/login', async (req, res) => {
     try {
         const { username, password } = req.body;
         // Check if user exists
-        console.log(username);
-        console.log(password);
-        console.log('before');
         const user = await User.findOne({ username });
-        console.log(user);
-        console.log('after');
         if (!user) {
             return res.status(400).json({ message: 'User Does not exist' });
         }

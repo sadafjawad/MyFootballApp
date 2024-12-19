@@ -25,7 +25,7 @@ app.use(cors());
 app.use('/', authRoutes);
 
 // Protected route
-app.get('/api/protected', authMiddleware, (req, res) => {
+app.get('/api/auth', authMiddleware, (req, res) => {
     res.json({ message: 'Protected route accessed successfully' });
 });
 
