@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import ProtectedRouteOutlet from './components/ProtectedRouteOutlet';
+import PickLeague from './pages/PickLeague';
+import PickTeam from './pages/PickTeam';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
             </Route>
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/pickleague' element={<PickLeague />} />
+            <Route path='/pickteam' element={<PickTeam />} />
           </Routes>
         </BrowserRouter>
       </div>
