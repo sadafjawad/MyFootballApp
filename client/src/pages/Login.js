@@ -26,7 +26,7 @@ const Login = () => {
     event.preventDefault();
     // Placeholder authentication logic
     try {
-      // Make a request to your backend to authenticate the user
+      // Make a request to backend to authenticate the user
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
