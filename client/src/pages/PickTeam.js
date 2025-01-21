@@ -42,9 +42,7 @@ const PickTeam = () => {
   }, [league]); // Dependency on league ensures fetch is called once when league changes
 
   const handleTeamClick = (team) => {
-    // Navigate to team details or another page
-    // Example:
-    // navigate('/teamdetails', { state: { team } });
+    navigate('/overview', { state: { team } });
     console.log('Selected team:', team);
   };
   

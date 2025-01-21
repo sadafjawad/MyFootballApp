@@ -7,6 +7,11 @@ import Login from './pages/Login';
 import ProtectedRouteOutlet from './components/ProtectedRouteOutlet';
 import PickLeague from './pages/PickLeague';
 import PickTeam from './pages/PickTeam';
+import Overview from './pages/Overview';
+import Matches from './pages/Matches';
+import Table from './pages/Table';
+import Players from './pages/Players';
+import News from './pages/News';
 
 function App() {
   return (
@@ -21,6 +26,11 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/pickleague' element={<PickLeague />} />
             <Route path='/pickteam' element={<PickTeam />} />
+            <Route path='/overview' element={<Overview />} />
+            <Route path='/matches' element={<Matches />} />
+            <Route path='/table' element={<Table />} />
+            <Route path='/players' element={<Players />} />
+            <Route path='/news' element={<News />} />
           </Routes>
         </BrowserRouter>
       </div>
