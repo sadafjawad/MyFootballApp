@@ -18,7 +18,7 @@ const PickTeam = () => {
     [135, 'SA'],
     [61, 'FL1']
   ]);
-  
+
   //console.log(leagues.get(league));
 
   useEffect(() => {
@@ -41,11 +41,38 @@ const PickTeam = () => {
     fetchTeams();
   }, [league]); // Dependency on league ensures fetch is called once when league changes
 
-  const handleTeamClick = (team) => {
-    navigate('/overview', { state: { team } });
-    console.log('Selected team:', team);
+  const handleTeamClick = async (team) => {
+    try {
+      const username = localStorage.getItem('username'); // Retrieve username from localStorage
+
+      if (!username) {
+        throw new Error('Username not found. Please log in again.');
+      }
+
+      const teamName = team || null;
+      const res = await fetch('http://localhost:5000/store-team', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, teamName }), // Send username along with the team
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to store team');
+      }
+
+      // console.log('Team stored successfully:', team);
+      navigate('/overview', { state: { team } });
+
+    } catch (err) {
+      console.error('Error storing team:', err);
+      setError('Failed to store the team. Please try again.');
+    }
   };
-  
+
+
+
   return (
     <div
       style={{
@@ -80,10 +107,10 @@ const PickTeam = () => {
         >
           {teamData.map((team, index) => (
             <Button
-                key={index}
-                variant="outlined"
-                onClick={() => handleTeamClick(team)}
-                sx={{
+              key={index}
+              variant="outlined"
+              onClick={() => handleTeamClick(team)}
+              sx={{
                 backgroundColor: 'lightgray',
                 borderRadius: '32px',
                 border: '2px solid white',
@@ -96,16 +123,16 @@ const PickTeam = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 '&:hover': {
-                    backgroundColor: 'yellow',
-                    color: 'red'
-                    }
-                }}
+                  backgroundColor: 'yellow',
+                  color: 'red'
+                }
+              }}
             >
-                <img
+              <img
                 src={team.crest}
                 alt={team.name}
                 style={{ width: '80px', height: '80px' }}
-                />
+              />
             </Button>
           ))}
         </div>

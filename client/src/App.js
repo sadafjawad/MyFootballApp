@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 import Home from './pages/Home';
 import Register from './pages/Register';
@@ -19,23 +19,25 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Routes>
-            <Route path='/*' element={<ProtectedRouteOutlet />}>
-              <Route path='' element={<Home />} />
-            </Route>
-            <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/pickleague' element={<PickLeague />} />
-            <Route path='/pickteam' element={<PickTeam />} />
-            <Route path='/overview' element={<Overview />} />
-            <Route path='/matches' element={<Matches />} />
-            <Route path='/table' element={<Table />} />
-            <Route path='/players' element={<Players />} />
-            <Route path='/news' element={<News />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/*' element={<ProtectedRouteOutlet />}>
+              <Route path='home' element={<Home />} />
+              <Route path='pickleague' element={<PickLeague />} />
+              <Route path='pickteam' element={<PickTeam />} />
+              <Route path='overview' element={<Overview />} />
+              <Route path='matches' element={<Matches />} />
+              <Route path='table' element={<Table />} />
+              <Route path='players' element={<Players />} />
+              <Route path='news' element={<News />} />
+            </Route>
+            <Route path='/' element={<Navigate to="/login" />} />
           </Routes>
         </BrowserRouter>
       </div>
     </AuthProvider>
   );
 }
+// login -> pick league -> pick team -> 
 
 export default App;
