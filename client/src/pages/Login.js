@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -40,8 +40,28 @@ const Login = () => {
         const data = await response.json();
         // Set isLoggedIn state to true
         setIsLoggedIn(true);
-        // Redirect to the home page
-        navigate('/');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.username);
+
+        const teamRes = await fetch(`http://localhost:5000/get-team/${data.username}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${data.token}`, // Pass token for authentication
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (teamRes.ok) {
+          const teamData = await teamRes.json();
+          if (teamData.team) {
+            // If team exists, redirect to overview
+            navigate('/overview', { state: { team: teamData.team } });
+            return;
+          }
+        }
+
+        // If no team is found, navigate to pickleague
+        navigate('/pickleague');
       } else {
         // Handle authentication error
         const errorData = await response.json();
